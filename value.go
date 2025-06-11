@@ -319,6 +319,19 @@ func (v Value) CallConstructor(args ...Value) Value {
 	return Value{ctx: v.ctx, ref: C.JS_CallConstructor(v.ctx.ref, v.ref, C.int(len(cargs)), &cargs[0])}
 }
 
+// NewWithoutConstructor creates a new object instance without calling the constructor
+func (v Value) NewWithoutConstructor() Value {
+	if !v.IsConstructor() {
+		return v.ctx.Error(errors.New("Object not a constructor"))
+	}
+	
+	prototype := v.Get("prototype")
+	defer prototype.Free()
+	
+	// Create object with the constructor's prototype without calling constructor
+	return Value{ctx: v.ctx, ref: C.JS_NewObjectProto(v.ctx.ref, prototype.ref)}
+}
+
 // Deprecated: Use ToError() instead.
 func (v Value) Error() error {
 	return v.ToError()

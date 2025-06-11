@@ -8,6 +8,7 @@
 extern JSValue JS_NewNull();
 extern JSValue JS_NewUndefined();
 extern JSValue JS_NewUninitialized();
+extern JSValue JS_NewObjectProto(JSContext *ctx, JSValueConst proto);
 extern JSValue ThrowSyntaxError(JSContext *ctx, const char *fmt) ;
 extern JSValue ThrowTypeError(JSContext *ctx, const char *fmt) ;
 extern JSValue ThrowReferenceError(JSContext *ctx, const char *fmt) ;
